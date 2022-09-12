@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 import announcements
 import clients
 
@@ -8,31 +8,31 @@ announcement_mgmt = announcements.AnnouncementMGMT(client_mgmt)
 
 @app.errorhandler(500)
 def handle500(e):
-    return jsonify({
+    return make_response(jsonify({
         'code': 500,
         'data': 'Internal Server Error'
-    })
+    }), 500)
 
 @app.errorhandler(404)
 def handle404(e):
-    return jsonify({
+    return make_response(jsonify({
         'code': 404,
         'data': 'Not found'
-    })
+    }), 404)
 
 @app.errorhandler(400)
 def handle400(e):
-    return jsonify({
+    return make_response(jsonify({
         'code': 400,
         'data': 'Bad request'
-    })
+    }), 400)
 
 @app.errorhandler(405)
 def handle400(e):
-    return jsonify({
+    return make_response(jsonify({
         'code': 405,
         'data': 'Method Not Allowed'
-    })
+    }), 405)
 
 @app.route('/announce', methods=['POST'])
 def announce():
