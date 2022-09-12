@@ -36,8 +36,7 @@ def handle400(e):
 
 @app.route('/announce', methods=['POST'])
 def announce():
-    data = request.form
-    
+    data = request.form['id']
     return jsonify({
         'code': 200,
         'data': 'Announced'
@@ -46,7 +45,7 @@ def announce():
 @app.route('/add_client', methods=['POST'])
 def add_client():
     data = request.form
-    id = self.clients.add_client(request.remote_addr, data['name'])
+    id = client_mgmt.add_client(request.remote_addr, data['name'])
     print('Client {} added'.format(id))
     return jsonify({
         'code': 200,
