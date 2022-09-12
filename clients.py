@@ -7,6 +7,7 @@ class ClientMGMT:
     def add_client(self, ip, name):
         id = str(uuid.uuid4())
         self.clients[id] = {'ip': ip, 'name': name}
+        return id
     def remove_client(self, id):
         del self.clients[id]
     def ping_client(self, id):

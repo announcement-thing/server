@@ -43,5 +43,15 @@ def announce():
         'data': 'Announced'
     })
 
+@app.route('/add_client', methods=['POST'])
+def add_client():
+    data = request.form
+    id = self.clients.add_client(request.remote_addr, data['name'])
+    print('Client {} added'.format(id))
+    return jsonify({
+        'code': 200,
+        'id': id
+    })
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4861)
