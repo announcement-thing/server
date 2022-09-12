@@ -1,5 +1,6 @@
 import uuid
 import requests
+import json
 
 class ClientMGMT:
     def __init__(self):
@@ -21,6 +22,12 @@ class ClientMGMT:
     def call_client(self, id, path, method, data=None):
         if self.ping_client(id):
             if method == 'GET':
-                requests.get('http://{}:4860{}'.format(self.clients[id]['ip'], path))
+                r = requests.get('http://{}:4860{}'.format(self.clients[id]['ip'], path))
             elif method == 'POST':
-                request.post('http://{}:4860{}'.format(self.clients[id]['ip'], path), data=data)
+                r = request.post('http://{}:4860{}'.format(self.clients[id]['ip'], path), data=data)
+            resp = json.loads(r.content.decode('utf-8'))
+            if resp['code'] == 200:
+                return resp['data']
+            else:
+                self.remove_client(id)
+                print('Client {} dropped after returning {} {}'.format(id, resp['code'], resp['data']))
