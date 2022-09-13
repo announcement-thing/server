@@ -24,7 +24,7 @@ class ClientMGMT:
             if method == 'GET':
                 r = requests.get('http://{}:4860{}'.format(self.clients[id]['ip'], path))
             elif method == 'POST':
-                r = request.post('http://{}:4860{}'.format(self.clients[id]['ip'], path), data=data)
+                r = requests.post('http://{}:4860{}'.format(self.clients[id]['ip'], path), data=data)
             resp = json.loads(r.content.decode('utf-8'))
             if resp['code'] == 200:
                 return resp['data']
