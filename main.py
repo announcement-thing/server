@@ -36,7 +36,8 @@ def handle400(e):
 
 @app.route('/announce', methods=['POST'])
 def announce():
-    data = request.form['id']
+    data = request.form
+    announcement_mgmt.announce(data['message'], data['id'])
     return jsonify({
         'code': 200,
         'data': 'Announced'
